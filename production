@@ -1,33 +1,41 @@
 [servers]
 XX.XX.XX.XXX
 
-# created with:
-# python -c 'import crypt; print crypt.crypt("actual_password", "password_secret")'
-deploy_user_password=generated_password
-puma_upstream_app=puma
-nginx_server_name=app.my_domain.com_or_ip
-# run with this var once you aready to setup ssl
-# nginx_template=nginx_ssl
-# run with this var if ssl is not ready to be used
-nginx_template=nginx
-nginx_read_timeout=60
-rails_secret_key_base=generate_running_rake_secret
-postgres_root_password=some_password
-postgres_user_password=some_password
-postgres_host=localhost
 # run with this var for the first ever run of ansible on the server
 ansible_ssh_user=root
 # run with this one after running at least one time before
 # ansible_ssh_user=deploy
+
 deploy_user=deploy
-postgres_user=deploy
+
+# created with:
+# python -c 'import crypt; print crypt.crypt("actual_password", "password_secret")'
+deploy_user_password=generated_password
+
+log_rotation_lifetime= 14
+
+nginx_read_timeout=60
+nginx_server_name=app.my_domain.com_or_ip
+# run with this var once you are ready to setup ssl
+# nginx_template=nginx_ssl
+# run with this var if ssl is not ready to be used
+nginx_template=nginx
+
+postgres_host=localhost
 postgres_db_name=your_production_db_name
 postgres_port=5432
-postgres_pool=10
+postgres_pool=5
+postgres_user=deploy
+postgres_root_password=some_password
+postgres_user_password=some_password
 postgres_version=XX
-log_rotation_lifetime= 14
-ruby_version=2.3.1
-rails_env=production
+
+puma_upstream_app=puma
+
 rails_app_name=your-app-name
 rails_current_dir=/home/{{ deploy_user }}/apps/{{ rails_app_name }}/current
+rails_env=staging
+rails_secret_key_base=generate_running_rake_secret
 rails_shared_dir=/home/{{ deploy_user }}/apps/{{ rails_app_name }}/shared
+
+ruby_version=2.3.1
