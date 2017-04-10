@@ -1,0 +1,2 @@
+- name: Enable restart of postgresql service on reboot
+  shell: update-rc.d postgresql enable

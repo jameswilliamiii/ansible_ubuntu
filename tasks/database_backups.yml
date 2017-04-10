@@ -1,0 +1,4 @@
+- file: path=~/backups state=directory
+- name: set up database backup script
+  template: src=templates/database_backup.sh dest=/home/{{ deploy_user }}/dbbackup.sh
+- file: path=//home/{{ deploy_user }}/dbbackup.sh mode=700

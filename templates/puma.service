@@ -1,0 +1,30 @@
+[Unit]
+Description=Puma Control
+After=network.target auditd.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/etc/puma/puma-start
+ExecStop=/etc/puma/puma-stop
+
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=Puma Rails Server
+After=network.target
+
+[Service]
+Type=simple
+User={{deploy_user}}
+WorkingDirectory={{rails_current_dir}}
+Environment=RAILS_ENV={{ rails_env }}
+Environment=SECRET_KEY_BASE={{ rails_secret_key_base }}
+ExecStart={{deploy_user_home_dir}}/.rbenv/bin/rbenv exec bundle exec puma -C {{rails_current_dir}}/config/puma.rb
+ExecStop={{deploy_user_home_dir}}/.rbenv/bin/rbenv exec bundle exec pumactl -S {{rails_shared_dir}}/pids/puma.state stop
+TimeoutSec=15
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

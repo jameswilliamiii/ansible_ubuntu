@@ -1,0 +1,28 @@
+- name: install nginx
+  apt: pkg=nginx
+
+- name: install nginx config
+  template: src=./templates/{{nginx_template}}_{{rails_env}}.server dest=/etc/nginx/sites-available/nginx-{{ rails_env }}.server
+
+- name: create ssl cert directory
+  file:
+    path=/etc/nginx/ssl
+    state=directory
+
+# - name: install ssl certs
+#   template: src=../../config/ssl_certs/{{item}} dest=/etc/nginx/ssl/{{item}}
+#   with_items:
+#     - your_cert_key.key
+#     - your-cert-bundle.crt
+
+- name: enable nginx config
+  file:
+    dest=/etc/nginx/sites-enabled/nginx-{{ rails_env }}.server
+    state=link
+    src=/etc/nginx/sites-available/nginx-{{ rails_env }}.server
+
+- name: disable nginx default config
+  file:
+    path=/etc/nginx/sites-enabled/default
+    state=absent
+  notify: restart nginx

@@ -1,0 +1,30 @@
+- name: Reset ufw
+  ufw: state=reset
+
+- name: Allow all outgoing requests
+  ufw: policy=allow direction=outgoing
+
+- name: Deny all incoming requests
+  ufw: policy=deny direction=incoming
+
+- name: Allow ssh access
+  ufw: rule=allow name=OpenSSH
+
+- name: Allow HTTP access
+  ufw: rule=allow port=80 proto=tcp
+
+- name: Allow HTTPS access
+  ufw: rule=allow port=443 proto=tcp
+
+- name: Allow postgres access
+  ufw: rule=allow from_ip=127.0.0.1 port={{ postgres_port }}
+
+- name: Allow port 6379 used by sidekiq
+  ufw: rule=allow from_ip=127.0.0.1 port=6379
+
+- name: Install ufw-ssh ban actions for fail2ban
+  template: src=ufw-ssh.conf dest=/etc/fail2ban/action.d/ufw-ssh.conf
+
+- name: Start ufw
+  ufw: state=enabled logging=low
+  

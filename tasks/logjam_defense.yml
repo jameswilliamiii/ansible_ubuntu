@@ -1,0 +1,12 @@
+- name: Crete private SSL dir
+  file:
+    path=/etc/ssl/private
+    state=directory
+    mode=710
+
+- name: Crete dhparams.pem file
+  command: openssl dhparam -out /etc/ssl/private/dhparams.pem 2048 creates=/etc/ssl/certs/dhparam.pem
+
+- file: path=/etc/ssl/private/dhparams.pem state=file mode=600
+  notify: restart nginx
+  

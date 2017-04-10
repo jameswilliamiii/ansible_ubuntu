@@ -1,0 +1,2 @@
+- name: set up logrotation for all rails app logs
+  template: src=templates/logrotate.conf dest=/etc/logrotate.d/rails

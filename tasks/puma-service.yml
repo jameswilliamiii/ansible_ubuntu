@@ -1,0 +1,28 @@
+- name: install puma.service
+  template: src=templates/puma.service dest=/etc/systemd/system/puma.service
+
+- name: change puma.service permissions
+  file: path=/etc/systemd/system/puma.service owner={{ deploy_user }} group=root mode=0755
+
+- name: systemctl daemon-reload
+  command: systemctl daemon-reload
+  become: yes
+
+- name: configure puma to restart on reboot
+  command: systemctl enable puma
+  become: yes
+
+# The Needs to be commented out before rails code is deployed to the server.
+# - name: explicitly start puma
+#   command: systemctl start puma
+#   become: yes
+
+- name: add sudoers file to allow passwordless restarts
+  template: src=./templates/sudoers_puma dest=/etc/sudoers.d/puma
+
+- name: Set includedir in sudoers
+  lineinfile:
+    dest: /etc/sudoers
+    line: "#includedir /etc/sudoers.d"
+    state: present
+    validate: "/usr/sbin/visudo -cf %s"

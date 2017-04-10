@@ -1,0 +1,20 @@
+- name: create rails app directories
+  file:
+    path={{ rails_shared_dir }}/config
+    state=directory
+
+- name: create sockets directory for puma
+  file:
+    path={{ rails_shared_dir }}/sockets
+    state=directory
+
+- name: create pids directory for puma
+  file:
+    path={{ rails_shared_dir }}/pids
+    state=directory
+
+- name: install rails database.yml
+  template: src=templates/database.yml dest={{ rails_shared_dir }}/config/database.yml
+
+- name: install rails application.yml
+  template: src=../config/application.yml dest={{ rails_shared_dir }}/config/application.yml

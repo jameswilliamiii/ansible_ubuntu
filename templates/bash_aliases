@@ -1,0 +1,1 @@
+alias console="cd {{ rails_current_dir }} && bundle exec rails c {{ rails_env }}"

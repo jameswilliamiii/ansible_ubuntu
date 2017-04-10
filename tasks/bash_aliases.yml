@@ -1,0 +1,2 @@
+- name: add bash_aliases
+  template: src=templates/bash_aliases dest=/home/{{ deploy_user }}/.bash_aliases

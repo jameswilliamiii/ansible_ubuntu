@@ -1,0 +1,3 @@
+%deploy ALL=(ALL) NOPASSWD: /bin/systemctl start sidekiq.service
+%deploy ALL=(ALL) NOPASSWD: /bin/systemctl stop sidekiq.service
+%deploy ALL=(ALL) NOPASSWD: /bin/systemctl restart sidekiq.service

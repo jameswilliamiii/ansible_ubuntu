@@ -1,0 +1,9 @@
+{{ rails_env }}:
+  adapter: postgresql
+  encoding: unicode
+  host: {{ postgres_host }}
+  port: {{ postgres_port }}
+  username: {{ postgres_user }}
+  password: {{ postgres_user_password }}
+  database: {{ postgres_db_name }}
+  pool: {{ postgres_pool }}
