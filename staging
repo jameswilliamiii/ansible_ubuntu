@@ -1,6 +1,7 @@
 [servers]
 XX.XX.XX.XXX
 
+[servers:vars]
 # run with this var for the first ever run of ansible on the server
 ansible_ssh_user=root
 # run with this one after running at least one time before
