@@ -25,14 +25,14 @@ ansible-playbook -i staging ansible/playbook.yml -K
 * We do not start services like Puma or Sidekiq due to the fact that your code is not deployed to the server when originally running.  You can uncomment these tasks if you want those services to be started up.
 * After deploying your code you can hop onto the server and run the following commands to start, stop, or restart these two services.  The tasks in this playbook add permissions to sudoers so you will not have to enter a sudo password if running the following commands:
 
-    ```
-    sudo /bin/systemctl start puma.service
-    sudo /bin/systemctl stop puma.service
-    sudo /bin/systemctl restart puma.service
+  ```
+  sudo /bin/systemctl start puma.service
+  sudo /bin/systemctl stop puma.service
+  sudo /bin/systemctl restart puma.service
 
-    sudo /bin/systemctl start sidekiq.service
-    sudo /bin/systemctl stop sidekiq.service
-    sudo /bin/systemctl restart sidekiq.service
-    ```
+  sudo /bin/systemctl start sidekiq.service
+  sudo /bin/systemctl stop sidekiq.service
+  sudo /bin/systemctl restart sidekiq.service
+  ```
 
 * You may also need to restart NGINX after your first deploy.  You can do this by running `sudo service nginx restart`.
