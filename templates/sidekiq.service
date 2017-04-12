@@ -25,7 +25,8 @@ After=syslog.target network.target
 [Service]
 Type=simple
 WorkingDirectory={{ rails_current_dir }}
-ExecStart=/bin/bash -lc 'bundle exec sidekiq -e {{ rails_env }} -C config/sidekiq.yml -L log/sidekiq.log'
+ExecStart={{deploy_user_home_dir}}/.rbenv/shims/bundle exec sidekiq -e {{ rails_env }} -C {{rails_current_dir}}/config/sidekiq.yml -L {{ rails_shared_dir }}/log/sidekiq.log
+ExecStop={{deploy_user_home_dir}}/.rbenv/shims/bundle exec sidekiqctl stop {{ rails_shared_dir }}/pids/sidekiq.pid >> {{ rails_shared_dir }}/log/sidekiq.log 2>&1
 PIDFile={{ rails_shared_dir }}/pids/sidekiq.pid
 User={{ deploy_user }}
 Group={{ deploy_user }}
