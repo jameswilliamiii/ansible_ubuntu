@@ -1,52 +1,62 @@
 - hosts: all
-  sudo: yes
+  become: true
+  gather_facts: false
+
+  # Ansible requires python2, which is not installed by default on Ubuntu Xenial
+  pre_tasks:
+    - raw: sudo apt-get -y install python-simplejson
+    # action: setup will gather facts after python2 has been installed
+    - action: setup
+
+- hosts: all
+  become: yes
   tasks:
     - include: tasks/setup.yml
 
 - hosts: all
-  sudo: yes
-  sudo_user: "{{ deploy_user }}"
+  become: yes
+  become_user: "{{ deploy_user }}"
   tasks:
     - include: tasks/ssh.yml
 
 - hosts: all
-  sudo: yes
-  sudo_user: "{{ deploy_user }}"
+  become: yes
+  become_user: "{{ deploy_user }}"
   tasks:
     - include: tasks/rbenv.yml
   handlers:
     - include: handlers/rbenv.yml
 
 - hosts: all
-  sudo: yes
-  sudo_user: "{{ deploy_user }}"
+  become: yes
+  become_user: "{{ deploy_user }}"
   tasks:
     - include: tasks/rbenv-ruby.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/root_security.yml
   handlers:
     - include: handlers/ssh.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/ufw.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/redis.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/sidekiq-service.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/postgresql-install.yml
     - include: tasks/postgresql-pghba.yml
@@ -54,73 +64,73 @@
     - include: handlers/postgresql.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/postgresql-db.yml
   handlers:
     - include: handlers/postgresql.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/postgresql-rc-update.yml
   handlers:
     - include: handlers/postgresql.yml
 
 - hosts: all
-  sudo: yes
-  sudo_user: "{{ deploy_user }}"
+  become: yes
+  become_user: "{{ deploy_user }}"
   tasks:
     - include: tasks/database_backups.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/nginx.yml
   handlers:
     - include: handlers/nginx.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/environment-variables.yml
 
 - hosts: all
-  sudo: yes
-  sudo_user: "{{ deploy_user }}"
+  become: yes
+  become_user: "{{ deploy_user }}"
   tasks:
     - include: tasks/rails-config.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/puma-service.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/memcached.yml
   handlers:
   - include: handlers/memcached.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/imagemagick.yml
 
 - hosts: all
-  sudo: yes
-  sudo_user: "{{ deploy_user }}"
+  become: yes
+  become_user: "{{ deploy_user }}"
   tasks:
     - include: tasks/bash_aliases.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/logrotate.yml
 
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
     - include: tasks/logjam_defense.yml
   handlers:

@@ -57,10 +57,10 @@
     line: "host    all             all             ::1/128                 trust"
     state: present
 
-- name: trust outside connection
-  lineinfile:
-    dest: /etc/postgresql/{{ postgres_version }}/main/pg_hba.conf
-    regexp: '^host\s+all\s+all+\s+0\.0\.0\.0/0\s+md5'
-    line: "host    all             all             0.0.0.0/0               md5"
-    state: present
-  notify: restart postgresql
+# - name: trust outside connection
+#   lineinfile:
+#     dest: /etc/postgresql/{{ postgres_version }}/main/pg_hba.conf
+#     regexp: '^host\s+all\s+all+\s+0\.0\.0\.0/0\s+md5'
+#     line: "host    all             all             0.0.0.0/0               md5"
+#     state: present
+#   notify: restart postgresql

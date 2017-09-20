@@ -8,7 +8,7 @@
 * SSH into your newly provisioned instance as root and add the file `~/.ssh/authorized_keys`.  Paste your public ssh key into this file and save it.
 * The first time you run these scripts you will need to use the variable value `ansible_ssh_user=root`.  Once that has completed, you can run additional plays with the value of `deploy`.
 * Be sure to update the file `templates/authorized_keys` with all public ssh keys that should be stored on the server for SSH access.
-* The ansible scripts can upload SSL certs, and the scripts assume these will be stored in `config/ssl_certs`.  You will then need to uncomment the `name: install ssl certs` task inside `tasks/nginx.yml`.
+* The ansible scripts can upload SSL certs, and the scripts assume these will be stored in `config/ssl_certs`.  You will then need to uncomment the `name: install ssl certs` task inside `tasks/nginx.yml`.  Make sure your SSL certs are part of your `.gitignore` file as you do not want those checked in.
 
 ## Running Your Playbook
 
@@ -20,6 +20,7 @@ ansible-playbook -i staging ansible/playbook.yml -K
 
 * Change out `staging` above with the inventory name you want to use.
 * Before running your playbook, make sure you have your password ready for whichever user you have set in `ansible_ssh_user`.
+* If running on AWS, then you do not need the `-K` as you do not have the password for the `root` or `ubuntu` user.
 
 ## After Running Complete These Steps
 * We do not start services like Puma or Sidekiq due to the fact that your code is not deployed to the server when originally running.  You can uncomment these tasks if you want those services to be started up.
