@@ -1,3 +1,4 @@
 %deploy ALL=(ALL) NOPASSWD: /bin/systemctl start puma.service
 %deploy ALL=(ALL) NOPASSWD: /bin/systemctl stop puma.service
 %deploy ALL=(ALL) NOPASSWD: /bin/systemctl restart puma.service
+%deploy ALL=(ALL) NOPASSWD: /bin/systemctl reload puma.service
