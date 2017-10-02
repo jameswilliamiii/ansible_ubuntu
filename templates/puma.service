@@ -18,6 +18,7 @@ Environment=SECRET_KEY_BASE={{ rails_secret_key_base }}
 ExecStart={{deploy_user_home_dir}}/.rbenv/shims/bundle exec puma -e {{ rails_env }} -C {{rails_current_dir}}/config/puma.rb {{rails_current_dir}}/config.ru
 PIDFile={{rails_shared_dir}}/pids/puma.pid
 ExecStop={{deploy_user_home_dir}}/.rbenv/shims/bundle exec pumactl -S {{rails_shared_dir}}/pids/puma.state stop
+ExecReload={{deploy_user_home_dir}}/.rbenv/shims/bundle exec pumactl -S {{rails_shared_dir}}/pids/puma.state phased-restart
 TimeoutSec=15
 Restart=always
 
