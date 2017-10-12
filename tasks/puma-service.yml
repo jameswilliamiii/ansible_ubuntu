@@ -1,3 +1,6 @@
+- name: install puma.rb config gile
+  template: src=templates/puma.rb dest={{ rails_shared_dir }}/config/puma.rb
+
 - name: install puma.service
   template: src=templates/puma.service dest=/etc/systemd/system/puma.service
 
