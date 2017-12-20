@@ -21,5 +21,4 @@
     - libcurl4-openssl-dev
     - ufw
     - fail2ban
-    - nodejs
     

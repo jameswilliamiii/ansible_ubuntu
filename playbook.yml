@@ -15,6 +15,16 @@
 
 - hosts: all
   become: yes
+  tasks:
+    - include: tasks/nodejs.yml
+
+- hosts: all
+  become: yes
+  tasks:
+    - include: tasks/yarn.yml
+
+- hosts: all
+  become: yes
   become_user: "{{ deploy_user }}"
   tasks:
     - include: tasks/ssh.yml
