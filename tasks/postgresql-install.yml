@@ -6,3 +6,4 @@
   apt: pkg=postgresql-{{ postgres_version }} state=present force=yes
 - name: Install postgres contrib for cube and earthdistance extensions
   apt: pkg=postgresql-contrib-{{ postgres_version }} state=present force=yes
+  notify: restart postgresql
