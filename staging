@@ -40,3 +40,7 @@ rails_secret_key_base=generate_running_rake_secret
 rails_shared_dir=/home/{{ deploy_user }}/apps/{{ rails_app_name }}/shared
 
 ruby_version=2.4.1
+
+# For AWS servers, use the private IP, otherwise this value can be set to public IP
+monit_ip=XX.XXX.XXX.XX
+monit_password=eightBit2018
