@@ -150,3 +150,8 @@
   become: yes
   tasks:
     - include: tasks/monit.yml
+
+- hosts: all
+  become: yes
+  tasks:
+    - include: tasks/timezone.yml

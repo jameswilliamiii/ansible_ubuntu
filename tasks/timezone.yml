@@ -1,0 +1,3 @@
+- name: Set Server Timezone - "{{ timezone }}"
+  timezone:
+    name: "{{ timezone }}"
