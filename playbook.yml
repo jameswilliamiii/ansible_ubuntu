@@ -145,3 +145,8 @@
     - include: tasks/logjam_defense.yml
   handlers:
     - include: handlers/nginx.yml
+
+- hosts: all
+  become: yes
+  tasks:
+    - include: tasks/monit.yml
