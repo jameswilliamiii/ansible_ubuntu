@@ -40,3 +40,5 @@ rails_secret_key_base=generate_running_rake_secret
 rails_shared_dir=/home/{{ deploy_user }}/apps/{{ rails_app_name }}/shared
 
 ruby_version=2.4.1
+
+timezone=America/New_York

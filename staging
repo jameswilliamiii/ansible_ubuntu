@@ -44,3 +44,5 @@ ruby_version=2.4.1
 # For AWS servers, use the private IP, otherwise this value can be set to public IP
 monit_ip=XX.XXX.XXX.XX
 monit_password=eightBit2018
+
+timezone=America/New_York
