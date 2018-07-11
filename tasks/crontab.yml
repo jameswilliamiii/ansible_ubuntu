@@ -1,0 +1,29 @@
+- name: Crontab | Copy housekeeping.sh
+  template: src=templates/housekeeping.sh dest=/home/deploy/housekeeping.sh owner=deploy group=deploy mode=700
+  become: yes
+
+- name: Crontab | Copy logcleanup.sh
+  template: src=templates/logcleanup.sh dest=/home/deploy/logcleanup.sh owner=deploy group=deploy mode=700
+  become: yes
+
+- name: Install Housekeeping on crontab
+  cron:
+    name: "Housekeeping"
+    minute: "0"
+    hour: "5"
+    job: "/home/deploy/housekeeping.sh"
+    disabled: "no"
+  become_user: "{{ deploy_user }}"
+  tags:
+   - cronjobs
+
+- name: Install Log Cleanup on crontab
+  cron:
+    name: "Log Cleanup"
+    minute: "0"
+    hour: "5"
+    job: "/home/deploy/logcleanup.sh"
+    disabled: "no"
+  become_user: "{{ deploy_user }}"
+  tags:
+   - cronjobs

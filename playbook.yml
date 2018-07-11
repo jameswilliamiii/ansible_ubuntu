@@ -155,3 +155,8 @@
   become: yes
   tasks:
     - include: tasks/timezone.yml
+
+- hosts: all
+  become: yes
+  tasks:
+    - include: tasks/crontab.yml

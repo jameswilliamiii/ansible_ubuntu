@@ -2,3 +2,14 @@
 - name: set up database backup script
   template: src=templates/database_backup.sh dest=/home/{{ deploy_user }}/dbbackup.sh
 - file: path=//home/{{ deploy_user }}/dbbackup.sh mode=700
+
+- name: Install DBBackups on crontab
+  cron:
+    name: "DB Backups"
+    minute: "0"
+    hour: "5"
+    job: "/home/deploy/dbbackup.sh"
+    disabled: "no"
+  become_user: "{{ deploy_user }}"
+  tags:
+   - cronjobs
