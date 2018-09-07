@@ -6,6 +6,14 @@
   command: ufw allow 2812
   become: yes
 
+- name: Monit | Copy file system monitoring conf.d template
+  template: src=templates/monit_filesystem.d dest=/etc/monit/conf.d/filesystem.d owner=root group=root
+  become: yes
+
+- name: Monit | Copy server monitoring conf.d template
+  template: src=templates/monit_server.d dest=/etc/monit/conf.d/server.d owner=root group=root
+  become: yes
+
 - name: Monit | Copy nginx conf.d template
   template: src=templates/monit_nginx.d dest=/etc/monit/conf.d/nginx.d owner=root group=root
   become: yes
