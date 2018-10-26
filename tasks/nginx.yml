@@ -2,7 +2,7 @@
   apt: pkg=nginx
 
 - name: install nginx config
-  template: src=./templates/{{nginx_template}}_{{rails_env}}.server dest=/etc/nginx/sites-available/nginx-{{ rails_env }}.server
+  template: src=./templates/{{nginx_template}}.server dest=/etc/nginx/sites-available/nginx-{{ rails_env }}.server
 
 - name: create ssl cert directory
   file:
