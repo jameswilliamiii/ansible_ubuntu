@@ -15,11 +15,11 @@ server {
   access_log /var/log/nginx/{{ rails_app_name }}_access.log combined;
   error_log /var/log/nginx/{{ rails_app_name }}_error.log;
 
-  location @app {
+  location @{{ puma_upstream_app }} {
       proxy_set_header X-Forwarded-For $remote_addr;
       proxy_set_header Host $http_host;
       proxy_redirect off;
-      proxy_pass http://@app;
+      proxy_pass http://{{ puma_upstream_app }};
       proxy_read_timeout {{ nginx_read_timeout }};
   }
 

@@ -1,0 +1,53 @@
+- name: stop NGINX
+  become: yes
+  become_user: root
+  shell: service nginx stop
+
+- name: install certbot dependencies
+  become: yes
+  become_user: root
+  apt: name={{ item }} state=present
+  with_items:
+    - libssl-dev
+    - libffi-dev
+    - python-dev
+    - python-pip
+    - python-virtualenv
+    - dialog
+    - libaugeas0
+    - ca-certificates
+
+- name: install Python cryptography module
+  pip: name=cryptography
+
+- name: download certbot
+  become: yes
+  become_user: '{{ deploy_user }}'
+  get_url: >
+    url=https://dl.eff.org/certbot-auto
+    dest=/home/{{ deploy_user }}/certbot-auto
+    mode=a+x
+
+- name: generate certs
+  become: yes
+  become_user: root
+  shell: "/home/{{ deploy_user }}/certbot-auto certonly --standalone -d {{ letsencrypt_domain }} --email {{ letsencrypt_email}} --non-interactive --agree-tos"
+
+- name: install nginx config
+  template: src=./templates/{{le_nginx_template}}.server dest=/etc/nginx/sites-available/nginx-{{ rails_env }}.server
+
+- name: enable nginx config
+  file:
+    dest=/etc/nginx/sites-enabled/nginx-{{ rails_env }}.server
+    state=link
+    src=/etc/nginx/sites-available/nginx-{{ rails_env }}.server
+
+- name: create cron job to auto renew
+  become: yes
+  become_user: root
+  cron:
+    name: "certbot-auto renew"
+    minute: "20"
+    hour: "6"
+    job: "/home/deploy/certbot-auto renew --pre-hook 'service nginx stop' --post-hook 'service nginx start' --quiet"
+  notify: restart nginx

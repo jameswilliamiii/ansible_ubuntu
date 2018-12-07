@@ -12,7 +12,7 @@ deploy_user=deploy
 
 # created with:
 # python -c 'import crypt; print crypt.crypt("actual_password", "password_secret")'
-deploy_user_password=generated_password
+deploy_user_password=generated_password_from_above
 
 log_rotation_lifetime= 14
 
@@ -24,7 +24,7 @@ nginx_server_name=app.my_domain.com_or_ip
 nginx_template=nginx
 
 postgres_host=localhost
-postgres_db_name=your_production_db_name
+postgres_db_name=your_staging_db_name
 postgres_port=5432
 postgres_pool=5
 postgres_user=deploy
@@ -42,4 +42,11 @@ rails_shared_dir=/home/{{ deploy_user }}/apps/{{ rails_app_name }}/shared
 
 ruby_version=2.4.1
 
+# For AWS servers, use the private IP, otherwise this value can be set to public IP
+monit_ip=XX.XXX.XXX.XX
+monit_password=eightBit2018
+
 timezone=America/New_York
+
+letsencrypt_email=your_email
+letsencrypt_domain=the_domain_you_are_getting_a_cert_for.com
