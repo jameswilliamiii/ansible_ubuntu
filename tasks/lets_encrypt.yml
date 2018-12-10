@@ -34,7 +34,7 @@
   shell: "/home/{{ deploy_user }}/certbot-auto certonly --standalone -d {{ letsencrypt_domain }} --email {{ letsencrypt_email}} --non-interactive --agree-tos"
 
 - name: install nginx config
-  template: src=./templates/{{le_nginx_template}}.server dest=/etc/nginx/sites-available/nginx-{{ rails_env }}.server
+  template: src=./templates/le_nginx_template.server dest=/etc/nginx/sites-available/nginx-{{ rails_env }}.server
 
 - name: enable nginx config
   file:
