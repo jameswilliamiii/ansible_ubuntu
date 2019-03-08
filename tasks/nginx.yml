@@ -1,5 +1,12 @@
+- name: install nginx repo
+  apt_repository:
+    repo: 'ppa:nginx/stable'
+    codename: 'bionic'
+
 - name: install nginx
-  apt: pkg=nginx
+  apt:
+    update_cache: yes
+    pkg: nginx
 
 - name: install nginx config
   template: src=./templates/{{nginx_template}}.server dest=/etc/nginx/sites-available/nginx-{{ rails_env }}.server

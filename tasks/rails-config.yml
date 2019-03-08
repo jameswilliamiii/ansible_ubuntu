@@ -5,22 +5,16 @@
 
 - name: create sockets directory for puma
   file:
-    path={{ rails_shared_dir }}/sockets
+    path={{ rails_shared_dir }}/tmp/sockets
     state=directory
 
 - name: create pids directory for puma
   file:
-    path={{ rails_shared_dir }}/pids
+    path={{ rails_shared_dir }}/tmp/pids
     state=directory
 
 - name: install rails database.yml
   template: src=templates/database.yml dest={{ rails_shared_dir }}/config/database.yml
-
-- name: install rails secrets.yml
-  template: src=../config/secrets.yml dest={{ rails_shared_dir }}/config/secrets.yml
-
-- name: install rails secrets.yml.enc
-  template: src=../config/secrets.yml.enc dest={{ rails_shared_dir }}/config/secrets.yml.enc
 
 - name: install rails secrets.yml.key
   template: src=../config/secrets.yml.key dest={{ rails_shared_dir }}/config/secrets.yml.key

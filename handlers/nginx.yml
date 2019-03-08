@@ -1,2 +1,9 @@
 - name: restart nginx
+  become: yes
+  become_user: root
   service: name=nginx state=restarted
+
+- name: stop nginx
+  become: yes
+  become_user: root
+  service: name=nginx state=stopped

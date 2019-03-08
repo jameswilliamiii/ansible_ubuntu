@@ -1,2 +1,4 @@
 - name: restart memcached
+  become: yes
+  become_user: root
   service: name=memcached state=restarted

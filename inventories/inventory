@@ -10,8 +10,9 @@ ansible_ssh_pass=server_root_password_goes_here
 
 deploy_user=deploy
 
-# created with:
-# python -c 'import crypt; print crypt.crypt("actual_password", "password_secret")'
+# To create an encrypted user password for ansible
+# 1: gem install mkpasswd
+# 2: mkpasswd -m sha-512
 deploy_user_password=generated_password_from_above
 
 log_rotation_lifetime= 14

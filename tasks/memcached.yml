@@ -1,3 +1,4 @@
 - name: install memcached
-  apt: pkg=memcached
+  apt:
+    pkg: memcached
   notify: restart memcached
