@@ -1,24 +1,25 @@
 - name: apt-update
-  shell: apt-get update
+  apt: update_cache=true
+
 - name: add deploy user
   user: name={{ deploy_user }} 
         shell=/bin/bash 
         password={{ deploy_user_password }} 
         ssh_key_file=.ssh/id_rsa
-- name: add deploy to sudoers
-  shell: sudo adduser {{ deploy_user }} sudo
-- name: install packages
+
+- name: Add user to sudoers file
+  lineinfile:
+    path: /etc/sudoers
+    regexp: '^{{deploy_user}}'
+    line: '{{deploy_user}} ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: update apt cache
   apt: update_cache=true
-  apt: pkg={{ item }}
-  with_items:
-    - curl
-    - build-essential
-    - libpq-dev
-    - libreadline-dev
-    - python-psycopg2
-    - git-core
-    - python-pycurl
-    - libcurl4-openssl-dev
-    - ufw
-    - fail2ban
-    
+
+- name: install packages
+  apt:
+    pkg: ['curl', 'build-essential', 'libssl1.0-dev', 'libpq-dev', 'libreadline-dev', 'zlib1g-dev', 'python-psycopg2', 'git-core', 'python-pycurl', 'libcurl4-openssl-dev', 'ufw', 'fail2ban', 'libyaml-dev', 'libxml2-dev', 'libxslt1-dev']
+
+- name: set hostname
+  hostname: name={{ hostname }}

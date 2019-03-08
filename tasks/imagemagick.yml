@@ -1,6 +1,4 @@
 - name: install imagemagick
   apt: update_cache=true
-  apt: pkg={{ item }}
-  with_items:
-    - imagemagick
-    - libmagickwand-dev
+  apt:
+    pkg: ['imagemagick', 'libmagickwand-dev']

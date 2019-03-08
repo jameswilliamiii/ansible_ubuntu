@@ -1,6 +1,3 @@
-- name: install puma.rb config gile
-  template: src=templates/puma.rb dest={{ rails_shared_dir }}/config/puma.rb
-
 - name: install puma.service
   template: src=templates/puma.service dest=/etc/systemd/system/puma.service
 
@@ -15,10 +12,9 @@
   command: systemctl enable puma
   become: yes
 
-# The Needs to be commented out before rails code is deployed to the server.
-# - name: explicitly start puma
-#   command: systemctl start puma
-#   become: yes
+- name: start puma
+  command: systemctl start puma
+  become: yes
 
 - name: add sudoers file to allow passwordless restarts
   template: src=./templates/sudoers_puma dest=/etc/sudoers.d/puma

@@ -1,2 +1,4 @@
 - name: restart redis-server
+  become: yes
+  become_user: root
   service: name=redis-server state=restarted

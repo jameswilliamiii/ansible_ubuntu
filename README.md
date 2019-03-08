@@ -1,18 +1,13 @@
-# Ansible Strategy For Ubuntu 16.04 LTS
+# Ansible Strategy For Ubuntu 18.04 LTS
 
-## Let's Encrypt Update:
-* Adds `tasks/lets_encrypt.yml`
-* Adds play call for Let's Encrypt to `playbook.yml`
-* Adds `ansible.cfg` file to keep process from locking up when getting certs.
-* Updates the nginx server templates and their names.
-* Adds new Let's Encrypt specific vars to inventories.
+*Looking for Ubuntu 16.04? There is a branch `ubuntu_16.04` that has the legacy version of this code.  Please note that security and deprecation updates may not have made it into that branch, so please only use it as a source for specific information as needed.*
 
 ## Modifications Required
 
-* Update the `staging` and `production` inventory files to fill in the server IP and put values into each variable.  Be sure to generate the encrypted deploy password using the python script in the inventory files.
-* Before committing any of these changes please be sure to add the inventory files to your `.gitignore`.
+* Update the `inventories/inventory` file to fill in the server IP and put values into each variable.  Be sure to generate the encrypted deploy password using the instructions in the inventory file.
+* Before committing any of these changes please be sure to add `ansible/inventories/*` to your `.gitignore`.
 * Be sure the ruby_version in the inventory files matches the ruby version you have set in your app.
-* SSH into your newly provisioned instance as root and add the file `~/.ssh/authorized_keys`.  Paste your public ssh key into this file and save it.
+* SSH into your newly provisioned instance as `root` and add a file `~/.ssh/authorized_keys` if it is missing.  Paste your public ssh key into this file and save it.
 * The first time you run these scripts you will need to use the variable value `ansible_ssh_user=root`.  Once that has completed, you can run additional plays with the value of `deploy`.
 * Be sure to update the file `templates/authorized_keys` with all public ssh keys that should be stored on the server for SSH access.
 * The ansible scripts can upload SSL certs, and the scripts assume these will be stored in `config/ssl_certs`.  You will then need to uncomment the `name: install ssl certs` task inside `tasks/nginx.yml`.  Make sure your SSL certs are part of your `.gitignore` file as you do not want those checked in.
@@ -21,11 +16,11 @@
 
 *Command*    
 ```
-ansible-playbook -i ansible/inventory ansible/playbook.yml -K
+ansible-playbook -i ansible/inventories/inventory ansible/playbook.yml -K
 ```
 *Notes*    
 
-* Change out `staging` above with the inventory name you want to use.
+* Change out `inventory` above with the inventory name you want to use.
 * Before running your playbook, make sure you have your password ready for whichever user you have set in `ansible_ssh_user`.
 * If running on AWS, then you do not need the `-K` as you do not have the password for the `root` or `ubuntu` user.
 
@@ -33,7 +28,7 @@ ansible-playbook -i ansible/inventory ansible/playbook.yml -K
 
 *Command*
 ```
-ansible-playbook -i ansible/inventory ansible/lets_encrypt_playbook.yml -K
+ansible-playbook -i ansible/inventories/inventory ansible/lets_encrypt_playbook.yml -K
 ```
 *Notes*
 
