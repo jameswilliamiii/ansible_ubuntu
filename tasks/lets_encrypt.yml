@@ -41,5 +41,5 @@
     name: "certbot-auto renew"
     minute: "20"
     hour: "6"
-    job: "/home/deploy/certbot-auto renew --pre-hook 'service nginx stop' --post-hook 'service nginx start' --quiet"
+    job: "/home/deploy/certbot-auto renew --nginx --quiet"
   notify: restart nginx
