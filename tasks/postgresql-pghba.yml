@@ -57,10 +57,5 @@
     line: "host    all             all             ::1/128                 trust"
     state: present
 
-# - name: trust outside connection
-#   lineinfile:
-#     dest: /etc/postgresql/{{ postgres_version }}/main/pg_hba.conf
-#     regexp: '^host\s+all\s+all+\s+0\.0\.0\.0/0\s+md5'
-#     line: "host    all             all             0.0.0.0/0               md5"
-#     state: present
-#   notify: restart postgresql
+# See https://www.postgresql.org/docs/10/auth-pg-hba-conf.html
+# for more docs on the above settings as well as examples.
