@@ -1,3 +1,6 @@
+- name: add postgres debian repo key signature
+  shell: "sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7FCC7D46ACCC4CF8"
+
 - name: install postgres xenial repo
   apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main' state=present
 
@@ -6,7 +9,7 @@
 
 - name: Install postgresql
   apt: pkg=postgresql-{{ postgres_version }} state=present force=yes
-  
+
 - name: Install postgres contrib for cube and earthdistance extensions
   apt: pkg=postgresql-contrib-{{ postgres_version }} state=present force=yes
   notify: restart postgresql

@@ -18,8 +18,24 @@
   apt: update_cache=true
 
 - name: install packages
-  apt:
-    pkg: ['curl', 'build-essential', 'libssl1.0-dev', 'libpq-dev', 'libreadline-dev', 'zlib1g-dev', 'python-psycopg2', 'git-core', 'python-pycurl', 'libcurl4-openssl-dev', 'ufw', 'fail2ban', 'libyaml-dev', 'libxml2-dev', 'libxslt1-dev']
+  become: yes
+  shell: "apt-get install -y {{item}}"
+  with_items:
+    - curl
+    - build-essential
+    - libssl1.0-dev
+    - libpq-dev
+    - libreadline-dev
+    - zlib1g-dev
+    - python-psycopg2
+    - git-core
+    - python-pycurl
+    - libcurl4-openssl-dev
+    - ufw
+    - fail2ban
+    - libyaml-dev
+    - libxml2-dev
+    - libxslt1-dev
 
 - name: set hostname
   hostname: name={{ hostname }}

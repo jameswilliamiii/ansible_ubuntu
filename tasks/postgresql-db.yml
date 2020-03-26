@@ -1,7 +1,13 @@
 - name: set postgres root password
   postgresql_user: name=postgres password={{ postgres_root_password }}
+  become: true
+  become_user: postgres
 - name: create postgres user
   postgresql_user: name={{ postgres_user }} role_attr_flags=SUPERUSER 
     password={{ postgres_user_password }}
+  become: true
+  become_user: postgres
 - name: create postgres db
   postgresql_db: name={{ postgres_db_name }} owner={{ postgres_user }}
+  become: true
+  become_user: postgres

@@ -9,7 +9,7 @@ ansible_ssh_pass=server_root_password_goes_here
 # ansible_ssh_user=deploy
 
 deploy_user=deploy
-
+deploy_user_home_dir=/home/{{deploy_user}}
 # To create an encrypted user password for ansible
 # 1: gem install mkpasswd
 # 2: mkpasswd -m sha-512
@@ -51,3 +51,4 @@ timezone=America/New_York
 
 letsencrypt_email=your_email
 letsencrypt_domain=the_domain_you_are_getting_a_cert_for.com
+hostname={{rails_app_name}}
