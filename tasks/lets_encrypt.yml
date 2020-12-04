@@ -2,44 +2,70 @@
   become: yes
   become_user: root
   shell: service nginx stop
+  args:
+    warn: false
 
-- name: install certbot dependencies
+- name: make sure snap core is installed
   become: yes
   become_user: root
-  apt:
-    pkg: ['libssl-dev', 'libffi-dev', 'python-dev', 'python-pip', 'python-virtualenv', 'dialog', 'libaugeas0','ca-certificates']
+  community.general.snap:
+    name: core
 
-- name: install Python cryptography module
-  pip: name=cryptography
-
-- name: download certbot
+- name: make sure snap core is up to date
   become: yes
-  become_user: '{{ deploy_user }}'
-  get_url: >
-    url=https://dl.eff.org/certbot-auto
-    dest=/home/{{ deploy_user }}/certbot-auto
-    mode=a+x
+  become_user: root
+  command: snap refresh core
+
+- name: remove old certbot-auto install
+  become: yes
+  become_user: root
+  file:
+    path: /home/{{ deploy_user }}/certbot-auto
+    state: absent
+
+- name: install certbot from snap
+  become: yes
+  become_user: root
+  community.general.snap:
+    name: certbot
+    classic: yes
+
+- name: prepare the certbot command
+  become: yes
+  become_user: root
+  file:
+    dest: /usr/bin/certbot
+    state: link
+    src: /snap/bin/certbot
 
 - name: generate certs
   become: yes
   become_user: root
-  shell: "/home/{{ deploy_user }}/certbot-auto certonly --standalone -d {{ letsencrypt_domain }} --email {{ letsencrypt_email}} --non-interactive --agree-tos"
+  shell: "certbot certonly --standalone -d {{ letsencrypt_domain }} --email {{ letsencrypt_email}} --non-interactive --agree-tos"
 
 - name: install nginx config
-  template: src=./templates/le_nginx_template.server dest=/etc/nginx/sites-available/nginx-{{ rails_env }}.server
+  template:
+    src: ./templates/le_nginx_template.server
+    dest: /etc/nginx/sites-available/nginx-{{ rails_env }}.server
 
 - name: enable nginx config
   file:
-    dest=/etc/nginx/sites-enabled/nginx-{{ rails_env }}.server
-    state=link
-    src=/etc/nginx/sites-available/nginx-{{ rails_env }}.server
+    dest: /etc/nginx/sites-enabled/nginx-{{ rails_env }}.server
+    state: link
+    src: /etc/nginx/sites-available/nginx-{{ rails_env }}.server
 
 - name: create cron job to auto renew
   become: yes
   become_user: root
   cron:
-    name: "certbot-auto renew"
+    name: "certbot auto-renew"
     minute: "20"
     hour: "6"
-    job: "/home/deploy/certbot-auto renew --nginx --quiet"
-  notify: restart nginx
+    job: "certbot renew --nginx --quiet"
+
+- name: start NGINX
+  become: yes
+  become_user: root
+  shell: service nginx start
+  args:
+    warn: false

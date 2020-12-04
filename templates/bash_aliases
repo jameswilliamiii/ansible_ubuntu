@@ -1,1 +1,2 @@
-alias console="cd {{ rails_current_dir }} && bundle exec rails c {{ rails_env }}"
+alias console="cd {{ rails_current_dir }} && bundle exec rails c"
+alias logs="cd {{rails_shared_dir}}/log"

@@ -14,11 +14,18 @@
 
 ## Running Your Playbook
 
-*Command*    
+### Important!
+You will need to install collections prior to running the playbook
+
+```
+ansible-galaxy install -r ansible/requirements.yml
+```
+
+*Command*
 ```
 ansible-playbook -i ansible/inventories/inventory ansible/playbook.yml -K
 ```
-*Notes*    
+*Notes*
 
 * Change out `inventory` above with the inventory name you want to use.
 * Before running your playbook, make sure you have your password ready for whichever user you have set in `ansible_ssh_user`.
