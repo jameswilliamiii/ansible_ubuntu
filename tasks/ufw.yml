@@ -17,7 +17,7 @@
   ufw: rule=allow port=443 proto=tcp
 
 - name: Allow postgres access
-  ufw: rule=allow from_ip=127.0.0.1 port={{ postgres_port }}
+  ufw: rule=allow from_ip=127.0.0.1 port='{{ postgres_port }}'
 
 - name: Allow port 6379 used by sidekiq
   ufw: rule=allow from_ip=127.0.0.1 port=6379
@@ -27,4 +27,3 @@
 
 - name: Start ufw
   ufw: state=enabled logging=low
-  

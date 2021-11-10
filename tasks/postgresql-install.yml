@@ -1,8 +1,8 @@
 - name: add postgres debian repo key signature
   shell: "sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7FCC7D46ACCC4CF8"
 
-- name: install postgres xenial repo
-  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main' state=present
+- name: install postgres {{ansible_distribution_release}} repo
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_distribution_release}}-pgdg main' state=present
 
 - name: Add postgres repository key
   apt_key: url=http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc state=present

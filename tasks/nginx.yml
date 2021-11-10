@@ -1,7 +1,7 @@
 - name: install nginx repo
   apt_repository:
     repo: 'ppa:nginx/stable'
-    codename: 'bionic'
+    codename: '{{ansible_distribution_release}}'
 
 - name: install nginx
   apt:

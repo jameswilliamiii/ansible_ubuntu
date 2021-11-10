@@ -17,7 +17,7 @@
   become: yes
 
 - name: add sudoers file to allow passwordless restarts
-  template: src=./templates/sudoers_puma dest=/etc/sudoers.d/puma
+  template: src=./templates/sudoers_puma dest=/etc/sudoers.d/puma mode=0440
 
 - name: Set includedir in sudoers
   lineinfile:
