@@ -1,7 +1,24 @@
+- name: check if current ruby is already installed
+  stat:
+    path: '/home/{{deploy_user}}/.rbenv/versions/{{ruby_version}}'
+  register: current_ruby
+
 - name: install ruby
-  shell: sudo -i -u {{ deploy_user }} rbenv install {{ ruby_version }}
-    creates=/home/{{ deploy_user }}/.rbenv/versions/{{ ruby_version }}
+  shell: sudo -i -u {{ deploy_user }} rbenv install {{ ruby_version }} creates=/home/{{ deploy_user }}/.rbenv/versions/{{ ruby_version }}
+  when: not current_ruby.stat.exists
+  async: 3600
+  poll: 10
+
+- name: rehash rbenv
+  become: yes
+  become_user: '{{deploy_user}}'
+  file:
+    path: 'home/{{deploy_user}}/.rbenv/shims/.rbenv-shim'
+    state: absent
+
 - name: finalize install
+  become: yes
+  become_user: '{{deploy_user}}'
   shell: sudo -u {{ deploy_user }} -i {{ item }}
   with_items:
     - rbenv global {{ ruby_version }}

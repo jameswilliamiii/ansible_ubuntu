@@ -1,0 +1,41 @@
+- hosts: all
+  become: yes
+  become_user: "{{ deploy_user }}"
+  tasks:
+    - name: update ruby-build
+      git: repo=https://github.com/sstephenson/ruby-build.git dest=~/.rbenv/plugins/ruby-build update=yes
+  handlers:
+    - include: ../handlers/rbenv.yml
+
+- hosts: all
+  become: yes
+  become_user: "{{ deploy_user }}"
+  tasks:
+    - include: ../tasks/rbenv.yml
+  handlers:
+    - include: ../handlers/rbenv.yml
+
+- hosts: all
+  become: yes
+  become_user: "{{ deploy_user }}"
+  tasks:
+    - include: ../tasks/rbenv-ruby.yml
+
+- hosts: all
+  become: yes
+  tasks:
+    - name: restart services
+      service: name={{item}} state=restarted
+      with_items:
+        - puma
+        - sidekiq
+      ignore_errors: yes
+
+- hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: restart NGINX
+      service:
+        name: nginx
+        state: restarted

@@ -1,5 +1,7 @@
 [servers]
 XX.XX.XX.XXX
+# Use the line below replaced with your sudo password if you don't want to run with -K
+# XX.XX.XX.XXXX ansible_sudo_pass=generated_sudo_password
 
 [servers:vars]
 # run with this var for the first ever run of ansible on the server

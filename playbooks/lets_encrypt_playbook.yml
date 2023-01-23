@@ -12,6 +12,6 @@
   become: yes
   become_user: "{{ deploy_user }}"
   tasks:
-    - include: tasks/lets_encrypt.yml
+    - include: ../tasks/lets_encrypt.yml
   handlers:
-    - include: handlers/nginx.yml
+    - include: ../handlers/nginx.yml
