@@ -16,5 +16,5 @@
 - name: install rails database.yml
   template: src=templates/database.yml dest={{ rails_shared_dir }}/config/database.yml
 
-- name: install rails secrets.yml.key
-  template: src=../config/secrets.yml.key dest={{ rails_shared_dir }}/config/secrets.yml.key
+- name: install rails master.key
+  template: src=../config/master.key dest={{ rails_shared_dir }}/config/master.key

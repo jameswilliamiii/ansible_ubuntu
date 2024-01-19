@@ -1,4 +1,4 @@
-# Ansible Strategy For Ubuntu 18.04 LTS
+# Ansible Strategy For Ubuntu 22.04 LTS
 
 *Looking for Ubuntu 16.04? There is a branch `ubuntu_16.04` that has the legacy version of this code.  Please note that security and deprecation updates may not have made it into that branch, so please only use it as a source for specific information as needed.*
 
@@ -19,6 +19,12 @@ You will need to install collections prior to running the playbook
 
 ```
 ansible-galaxy install -r ansible/requirements.yml
+```
+
+*vault*
+```
+password is the `config/master.key`
+ansible-vault encrypt inventories/staging.yml
 ```
 
 *Command*

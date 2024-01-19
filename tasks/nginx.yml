@@ -1,7 +1,7 @@
-- name: install nginx repo
-  apt_repository:
-    repo: 'ppa:nginx/stable'
-    codename: '{{ansible_distribution_release}}'
+# - name: install nginx repo
+#   apt_repository:
+#     repo: 'ppa:nginx/stable'
+#     codename: '{{ansible_distribution_release}}'
 
 - name: install nginx
   apt:
@@ -21,6 +21,11 @@
 #   with_items:
 #     - your_cert_key.key
 #     - your-cert-bundle.crt
+- name: remove www-data as user of ghost nginx process
+  replace:
+    path: /etc/nginx/nginx.conf
+    regexp: 'user www-data'
+    replace: 'user root'
 
 - name: enable nginx config
   file:
@@ -32,4 +37,4 @@
   file:
     path=/etc/nginx/sites-enabled/default
     state=absent
-  notify: restart nginx
+  # notify: restart nginx
