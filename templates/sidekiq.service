@@ -45,6 +45,7 @@ WorkingDirectory={{ rails_current_dir }}
 # ExecStart=/bin/bash -lc 'exec /home/deploy/.rbenv/shims/bundle exec sidekiq -e production'
 # If you use the system's ruby:
 ExecStart=/bin/bash -lc 'exec {{deploy_user_home_dir}}/.rbenv/shims/bundle exec sidekiq -e {{ rails_env }} -C {{rails_current_dir}}/config/sidekiq.yml &>> {{rails_shared_dir}}/log/sidekiq.log'
+# ExecStart=/bin/bash -lc 'exec /home/deploy/.rbenv/shims/bundle exec sidekiq -e production'
 # If you use rvm in production, don't.
 
 # Use `systemctl kill -s TSTP sidekiq` to quiet the Sidekiq process
