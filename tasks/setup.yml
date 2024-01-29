@@ -23,20 +23,21 @@
     pkg:
       - curl
       - build-essential
-      - libssl1.0-dev
+      - libssl-dev
       - libpq-dev
       - libreadline-dev
       - zlib1g-dev
-      - python-psycopg2
+      - python3-pip
       - git-core
-      - python-pycurl
+      - python3-psycopg2
+      - python3-pycurl
       - libcurl4-openssl-dev
       - ufw
       - fail2ban
       - libyaml-dev
       - libxml2-dev
       - libxslt1-dev
-      - libssl-dev
+      - acl
 
 - name: set hostname
   hostname:

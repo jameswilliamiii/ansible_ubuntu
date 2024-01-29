@@ -14,9 +14,9 @@
   command: systemctl enable sidekiq
   become: yes
 
-- name: explicitly start sidekiq
-  command: systemctl start sidekiq
-  become: yes
+# - name: explicitly start sidekiq
+#   command: systemctl start sidekiq
+#   become: yes
 
 - name: add sudoers file to allow passwordless restarts
   template:
