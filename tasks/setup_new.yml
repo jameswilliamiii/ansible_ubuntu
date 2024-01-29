@@ -1,3 +1,7 @@
+- name: add latest yarn GPG key
+  become: yes
+  shell: "curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -"
+
 - name: apt-update
   apt:
     update_cache: true
@@ -17,26 +21,10 @@
     validate: 'visudo -cf %s'
 
 - name: install packages
-  become: true
+  become: yes
   apt:
     update_cache: true
-    pkg:
-      - curl
-      - build-essential
-      - libssl1.0-dev
-      - libpq-dev
-      - libreadline-dev
-      - zlib1g-dev
-      - python-psycopg2
-      - git-core
-      - python-pycurl
-      - libcurl4-openssl-dev
-      - ufw
-      - fail2ban
-      - libyaml-dev
-      - libxml2-dev
-      - libxslt1-dev
-      - libssl-dev
+    pkg: ['curl', 'build-essential', 'libssl1.0-dev', 'libpq-dev', 'libreadline-dev', 'zlib1g-dev', 'python-psycopg2', 'git-core', 'python-pycurl', 'libcurl4-openssl-dev', 'ufw', 'fail2ban', 'libyaml-dev', 'libxml2-dev', 'libxslt1-dev', 'libssl-dev']
 
 - name: set hostname
   hostname:

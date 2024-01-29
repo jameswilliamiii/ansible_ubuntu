@@ -1,3 +1,9 @@
-- file: path=/home/{{ deploy_user }}/.ssh state=directory
+- name: set up ssh folder
+  file:
+    path: /home/{{ deploy_user }}/.ssh
+    state: directory
 - name: set up authorized_keys
-  template: src=templates/authorized_keys dest=/home/{{ deploy_user }}/.ssh/authorized_keys mode=600
+  template:
+    src: templates/authorized_keys
+    dest: /home/{{ deploy_user }}/.ssh/authorized_keys
+    mode: '600'

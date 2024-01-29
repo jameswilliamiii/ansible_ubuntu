@@ -1,0 +1,2 @@
+/inventories/*.inv
+!/inventories/*.default.inv

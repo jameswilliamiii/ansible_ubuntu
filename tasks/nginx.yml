@@ -21,6 +21,7 @@
 #   with_items:
 #     - your_cert_key.key
 #     - your-cert-bundle.crt
+
 - name: remove www-data as user of ghost nginx process
   replace:
     path: /etc/nginx/nginx.conf
