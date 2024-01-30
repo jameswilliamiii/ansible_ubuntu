@@ -41,7 +41,8 @@ postgres_root_password=some_password
 postgres_user_password=some_password
 postgres_version=14
 
-puma_upstream_app=puma
+puma_upstream_app=quilt
+puma_process_dir={{rails_shared_dir}}/tmp
 
 rails_env=staging
 rails_app_name=your-app-name
