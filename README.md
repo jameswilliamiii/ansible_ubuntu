@@ -1,10 +1,11 @@
 # Ansible Strategy For Ubuntu 22.04 LTS
 
-*Looking for Ubuntu 16.04? There is a branch `ubuntu_16.04` that has the legacy version of this code.  Please note that security and deprecation updates may not have made it into that branch, so please only use it as a source for specific information as needed.*
+*Looking for an older version Ubuntu? There are branches for `ubuntu_16.04` and `ubuntu_18.04` that have the legacy version of this code.  Please note that security and deprecation updates may not have made it into that branch, so please only use it as a source for specific information as needed.*
 
 ## Modifications Required
-
-* Update the `inventories/inventory` file to fill in the server IP and put values into each variable.  Be sure to generate the encrypted deploy password using the instructions in the inventory file.
+* Copy inventory.default.inv to a file with the name of your server, for example:
+  * `cp inventories/inventory.default.inv inventories/staging.inv`
+* Update the `inventories/{your_server}.inv` file to fill in the server IP and put values into each variable.  Be sure to generate the encrypted deploy password using the instructions in the inventory file.
 * Before committing any of these changes please be sure to add `ansible/inventories/*` to your `.gitignore`.
 * Be sure the ruby_version in the inventory files matches the ruby version you have set in your app.
 * SSH into your newly provisioned instance as `root` and add a file `~/.ssh/authorized_keys` if it is missing.  Paste your public ssh key into this file and save it.
@@ -19,12 +20,6 @@ You will need to install collections prior to running the playbook
 
 ```
 ansible-galaxy install -r ansible/requirements.yml
-```
-
-*vault*
-```
-password is the `config/master.key`
-ansible-vault encrypt inventories/staging.yml
 ```
 
 *Command*

@@ -1,3 +1,4 @@
+# NOTE: This is usually not needed, but if you want install the latest release from the nginx repo, you can use the commented out code below.
 # - name: install nginx repo
 #   apt_repository:
 #     repo: 'ppa:nginx/stable'

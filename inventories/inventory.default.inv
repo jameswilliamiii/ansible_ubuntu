@@ -30,7 +30,7 @@ nginx_server_name={{server_ip}}
 # run with this var if ssl is not ready to be used
 nginx_template=nginx
 
-node_major_version=14
+node_major_version=20
 
 postgres_host=localhost
 postgres_db_name=your_staging_db_name
@@ -42,7 +42,7 @@ postgres_user_password=some_password
 # latest working is 14 as of 1/29/2024
 postgres_version=XX
 
-puma_upstream_app=quilt
+puma_upstream_app=puma
 puma_process_dir={{rails_shared_dir}}/tmp
 
 rails_env=staging
