@@ -4,27 +4,33 @@ XX.XX.XX.XXX
 # XX.XX.XX.XXXX ansible_sudo_pass=generated_sudo_password
 
 [servers:vars]
+server_ip=XXX.XXX.XX.XX
 # run with this var for the first ever run of ansible on the server
 ansible_ssh_user=root
 ansible_ssh_pass=server_root_password_goes_here
 # run with this one after running at least one time before
 # ansible_ssh_user=deploy
+# ansible_ssh_pass=deploy_password_goes_here
 
 deploy_user=deploy
 deploy_user_home_dir=/home/{{deploy_user}}
+# deploy user password is: deploy_password_goes_here
 # To create an encrypted user password for ansible
 # 1: gem install mkpasswd
 # 2: mkpasswd -m sha-512
 deploy_user_password=generated_password_from_above
 
-log_rotation_lifetime= 14
+log_rotation_lifetime=14
 
 nginx_read_timeout=60
-nginx_server_name=app.my_domain.com_or_ip
+# or your domain name:
+nginx_server_name={{server_ip}}
 # run with this var once you are ready to setup ssl
 # nginx_template=nginx_ssl
 # run with this var if ssl is not ready to be used
 nginx_template=nginx
+
+node_major_version=20
 
 postgres_host=localhost
 postgres_db_name=your_staging_db_name
@@ -33,21 +39,27 @@ postgres_pool=5
 postgres_user=deploy
 postgres_root_password=some_password
 postgres_user_password=some_password
+# latest working is 14 as of 1/29/2024
 postgres_version=XX
 
 puma_upstream_app=puma
+puma_process_dir={{rails_shared_dir}}/tmp
 
+rails_env=staging
 rails_app_name=your-app-name
 rails_current_dir=/home/{{ deploy_user }}/apps/{{ rails_app_name }}/current
-rails_env=staging
 rails_secret_key_base=generate_running_rake_secret
 rails_shared_dir=/home/{{ deploy_user }}/apps/{{ rails_app_name }}/shared
 
-ruby_version=2.4.1
+# check latest with:
+# brew upgrade ruby-build
+# rbenv install -L | grep -e '^[0-9].*\.[0-9]$' | tail -1
+ruby_version=3.3.0
 
+# uncomment for monit
 # For AWS servers, use the private IP, otherwise this value can be set to public IP
-monit_ip=XX.XXX.XXX.XX
-monit_password=eightBit2018
+# monit_ip=XX.XXX.XXX.XX
+# monit_password=monitpw
 
 timezone=America/New_York
 

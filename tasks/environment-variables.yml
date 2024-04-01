@@ -5,5 +5,6 @@
     regexp: "{{ item.regexp }}"
     state: present
   with_items:
+    - { regexp: '^export RAILS_MASTER_KEY', line: "export RAILS_MASTER_KEY={{ rails_master_key }}"}
     - { regexp: '^export SECRET_KEY_BASE', line: "export SECRET_KEY_BASE={{ rails_secret_key_base }}"}
     - { regexp: '^export RAILS_ENV', line: "export RAILS_ENV={{ rails_env }}"}

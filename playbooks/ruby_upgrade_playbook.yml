@@ -3,7 +3,7 @@
   become_user: "{{ deploy_user }}"
   tasks:
     - name: update ruby-build
-      git: repo=https://github.com/sstephenson/ruby-build.git dest=~/.rbenv/plugins/ruby-build update=yes
+      git: repo=https://github.com/rbenv/ruby-build.git dest=~/.rbenv/plugins/ruby-build update=yes
   handlers:
     - include: ../handlers/rbenv.yml
 

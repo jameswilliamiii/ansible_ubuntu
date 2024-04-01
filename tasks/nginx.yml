@@ -1,7 +1,8 @@
-- name: install nginx repo
-  apt_repository:
-    repo: 'ppa:nginx/stable'
-    codename: '{{ansible_distribution_release}}'
+# NOTE: This is usually not needed, but if you want install the latest release from the nginx repo, you can use the commented out code below.
+# - name: install nginx repo
+#   apt_repository:
+#     repo: 'ppa:nginx/stable'
+#     codename: '{{ansible_distribution_release}}'
 
 - name: install nginx
   apt:
@@ -21,6 +22,12 @@
 #   with_items:
 #     - your_cert_key.key
 #     - your-cert-bundle.crt
+
+- name: remove www-data as user of ghost nginx process
+  replace:
+    path: /etc/nginx/nginx.conf
+    regexp: 'user www-data'
+    replace: 'user root'
 
 - name: enable nginx config
   file:

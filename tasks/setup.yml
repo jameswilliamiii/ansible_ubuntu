@@ -9,25 +9,35 @@
     password: "{{ deploy_user_password }}"
     ssh_key_file: .ssh/id_rsa
 
-- name: add {{deploy_user}} sudoers file
-  template: src=./templates/sudoers_user dest=/etc/sudoers.d/{{deploy_user}} mode=0440
-
-- name: Set includedir in sudoers
+- name: Add user to sudoers file
   lineinfile:
-    dest: /etc/sudoers
-    line: "#includedir /etc/sudoers.d"
-    state: present
-    validate: "/usr/sbin/visudo -cf %s"
+    path: /etc/sudoers
+    regexp: '^{{deploy_user}}'
+    line: '{{deploy_user}} ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
 
 - name: install packages
-  become: yes
+  become: true
   apt:
     update_cache: true
-    pkg: ['curl', 'build-essential', 'libssl-dev', 'libpq-dev', 'libreadline-dev', 'zlib1g-dev', 'python3-pip', 'git-core', 'python-pycurl', 'libcurl4-openssl-dev', 'ufw', 'fail2ban', 'libyaml-dev', 'libxml2-dev', 'libxslt1-dev', 'acl']
-
-- name: install psycopg2
-  pip:
-    name: psycopg2
+    pkg:
+      - curl
+      - build-essential
+      - libssl-dev
+      - libpq-dev
+      - libreadline-dev
+      - zlib1g-dev
+      - python3-pip
+      - git-core
+      - python3-psycopg2
+      - python3-pycurl
+      - libcurl4-openssl-dev
+      - ufw
+      - fail2ban
+      - libyaml-dev
+      - libxml2-dev
+      - libxslt1-dev
+      - acl
 
 - name: set hostname
   hostname:

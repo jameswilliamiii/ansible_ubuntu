@@ -1,8 +1,14 @@
 - name: install puma.service
-  template: src=templates/puma.service dest=/etc/systemd/system/puma.service
+  template:
+    src: templates/puma.service
+    dest: /etc/systemd/system/puma.service
 
 - name: change puma.service permissions
-  file: path=/etc/systemd/system/puma.service owner={{ deploy_user }} group=root mode=0755
+  file:
+    path: /etc/systemd/system/puma.service
+    owner: "{{ deploy_user }}"
+    group: root
+    mode: '0755'
 
 - name: systemctl daemon-reload
   command: systemctl daemon-reload
@@ -17,7 +23,9 @@
   become: yes
 
 - name: add sudoers file to allow passwordless restarts
-  template: src=./templates/sudoers_puma dest=/etc/sudoers.d/puma mode=0440
+  template:
+    src: ./templates/sudoers_puma
+    dest: /etc/sudoers.d/puma
 
 - name: Set includedir in sudoers
   lineinfile:

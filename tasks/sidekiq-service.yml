@@ -1,5 +1,9 @@
 - name: Sidekiq | Copy systemd template to systemd multiuser directory
-  template: src=templates/sidekiq.service dest=/etc/systemd/system/sidekiq.service owner=root group=root
+  template:
+    src: templates/sidekiq.service
+    dest: /etc/systemd/system/sidekiq.service
+    owner: root
+    group: root
   become: yes
 
 - name: systemctl daemon-reload
@@ -15,7 +19,9 @@
 #   become: yes
 
 - name: add sudoers file to allow passwordless restarts
-  template: src=./templates/sudoers_sidekiq dest=/etc/sudoers.d/sidekiq
+  template:
+    src: ./templates/sudoers_sidekiq
+    dest: /etc/sudoers.d/sidekiq
 
 - name: Set includedir in sudoers
   lineinfile:

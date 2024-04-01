@@ -14,11 +14,12 @@ Type=simple
 User={{deploy_user}}
 WorkingDirectory={{rails_current_dir}}
 Environment=RAILS_ENV={{ rails_env }}
-Environment=SECRET_KEY_BASE={{ rails_secret_key_base }}
+Environment=RACK_ENV={{ rails_env }}
+Environment=RAILS_MASTER_KEY={{ rails_master_key }}
 ExecStart={{deploy_user_home_dir}}/.rbenv/shims/bundle exec puma -e {{ rails_env }} -C {{rails_current_dir}}/config/puma.rb {{rails_current_dir}}/config.ru
-PIDFile={{rails_shared_dir}}/pids/puma.pid
-ExecStop={{deploy_user_home_dir}}/.rbenv/shims/bundle exec pumactl -S {{rails_shared_dir}}/pids/puma.state stop
-ExecReload={{deploy_user_home_dir}}/.rbenv/shims/bundle exec pumactl -S {{rails_shared_dir}}/pids/puma.state phased-restart
+PIDFile={{puma_process_dir}}/pids/puma.pid
+ExecStop={{deploy_user_home_dir}}/.rbenv/shims/bundle exec pumactl -S {{puma_process_dir}}/pids/puma.state stop
+ExecReload={{deploy_user_home_dir}}/.rbenv/shims/bundle exec pumactl -S {{puma_process_dir}}/pids/puma.state phased-restart
 TimeoutSec=15
 Restart=always
 

@@ -1,4 +1,4 @@
 - name: install imagemagick
-  apt: update_cache=true
   apt:
+    update_cache: true
     pkg: ['imagemagick', 'libmagickwand-dev']
